@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lección 1: Cloud Computing &amp; AWS Global Infrastructure</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.7;
+    color: #1a1a2e;
+    background: #fafafa;
+    padding: 0;
+  }
+
+  /* Header */
+  .lesson-header {
+    background: linear-gradient(135deg, #232f3e 0%, #1a1a2e 100%);
+    color: #fff;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .lesson-header h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+  }
+  .lesson-header .meta {
+    color: #b0bec5;
+    font-size: 0.9rem;
+  }
+  .lesson-header .badge {
+    display: inline-block;
+    background: #ff9900;
+    color: #1a1a2e;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.75rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+
+  /* Content */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 2.5rem 0 1rem;
+    color: #232f3e;
+    padding-bottom: 0.3rem;
+    border-bottom: 3px solid #ff9900;
+  }
+  h3 {
+    font-size: 1.15rem;
+    margin: 1.75rem 0 0.75rem;
+    color: #37474f;
+  }
+  p { margin-bottom: 1rem; color: #444; }
+  ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.5rem; color: #444; }
+
+  code {
+    background: #e8eaf6;
+    color: #283593;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+  pre {
+    background: #1a1a2e;
+    color: #e0e0e0;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 1rem 0;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  pre .hl { color: #ff9900; }
+
+  /* Info box */
+  .info {
+    background: #e3f2fd;
+    border-left: 4px solid #1976d2;
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+  }
+  .info strong { color: #1565c0; }
+  .warning {
+    background: #fff3e0;
+    border-left: 4px solid #f57c00;
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+  }
+  .warning strong { color: #e65100; }
+  .tip {
+    background: #e8f5e9;
+    border-left: 4px solid #388e3c;
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+  }
+  .tip strong { color: #2e7d32; }
+
+  /* Diagram */
+  .diagram {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 1.25rem 0;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    font-size: 0.9rem;
+  }
+  th {
+    background: #232f3e;
+    color: #fff;
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #eee;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* Quiz */
+  .quiz-question {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+  }
+  .quiz-question p { margin-bottom: 0.75rem; font-weight: 600; }
+  .quiz-question label {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin: 0.25rem 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-weight: 400;
+  }
+  .quiz-question label:hover { background: #f5f5f5; }
+  .quiz-question input[type="radio"] { margin-right: 0.5rem; }
+  .quiz-answer {
+    display: none;
+    background: #e8f5e9;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+  }
+  .quiz-answer strong { color: #2e7d32; }
+  .quiz-btn {
+    background: #ff9900;
+    color: #1a1a2e;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+  .quiz-btn:hover { background: #f57c00; }
+
+  /* Steps */
+  .step-list {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+  }
+  .step-list li {
+    counter-increment: step;
+    padding: 1rem 1rem 1rem 3.5rem;
+    position: relative;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+  .step-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #232f3e;
+    color: #ff9900;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: #78909c;
+    font-size: 0.85rem;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 600px) {
+    .lesson-header { padding: 2rem 1rem; }
+    .lesson-header h1 { font-size: 1.5rem; }
+    .container { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lesson-header">
+  <div class="badge">Lección 1 / 50</div>
+  <h1>Cloud Computing &amp; AWS Global Infrastructure</h1>
+  <p class="meta">Semana 1 · Día 1 · ⏱ 45-60 minutos</p>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<h2>🎯 ¿Por qué esto importa?</h2>
+
+<p>Eres backend developer. Ya sabes escribir APIs, manejar bases de datos y desplegar lógica de negocio. Pero todo ese código necesita un lugar donde ejecutarse. <strong>AWS es ese lugar — pero no es un datacenter tradicional.</strong></p>
+
+<p>AWS es <em>infraestructura programable</em>: cada servidor, firewall, balanceador y base de datos se controla mediante APIs. Como backend dev, esto significa que puedes tratar la infraestructura como código — igual que tratas tu lógica de negocio.</p>
+
+<p>Cuando termines esta lección, vas a:</p>
+<ul>
+  <li>✅ Explicar qué es cloud computing y los modelos IaaS/PaaS/SaaS con ejemplos concretos.</li>
+  <li>✅ Describir la jerarquía global de AWS: Regions → AZs → Edge Locations.</li>
+  <li>✅ Tener tu propia cuenta AWS Free Tier lista y asegurada con MFA.</li>
+  <li>✅ Navegar la consola AWS y entender qué estás viendo.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>☁️ 1. Cloud Computing</h2>
+
+<p>Cloud computing es la entrega bajo demanda de recursos de TI (cómputo, almacenamiento, bases de datos, redes) a través de internet, con <strong>pago por uso</strong>.</p>
+
+<p>Antes, para lanzar un servidor web necesitabas: comprar hardware, instalarlo en un rack, configurar red, esperar semanas. Con AWS: <strong>un solo comando o clic</strong> y tienes un servidor corriendo en minutos.</p>
+
+<h3>Tres modelos de servicio</h3>
+<table>
+  <tr><th>Modelo</th><th>Qué gestionas tú</th><th>Qué gestiona AWS</th><th>Ejemplo</th></tr>
+  <tr>
+    <td><strong>IaaS</strong></td>
+    <td>SO, app, datos</td>
+    <td>Servidores, red, datacenter</td>
+    <td><code>EC2</code> — alquilas una VM</td>
+  </tr>
+  <tr>
+    <td><strong>PaaS</strong></td>
+    <td>Solo tu app y datos</td>
+    <td>SO, runtime, escalado, parches</td>
+    <td><code>Elastic Beanstalk</code> — subes tu código</td>
+  </tr>
+  <tr>
+    <td><strong>SaaS</strong></td>
+    <td>Solo config</td>
+    <td>Todo lo demás (app completa)</td>
+    <td><code>Gmail</code>, <code>Salesforce</code> — usas el software</td>
+  </tr>
+</table>
+
+<div class="tip">
+<strong>🧠 Para el backend dev:</strong> Piensa en IaaS como "alquilar un VPS", PaaS como "subir tu código a Heroku", y SaaS como "usar Stripe". AWS te da los tres — pero los arquitectos pasan más tiempo en IaaS y PaaS.
+</div>
+
+<h3>Ventajas clave del cloud</h3>
+<ul>
+  <li><strong>Elasticidad:</strong> Escalas de 1 a 1000 servidores en minutos.</li>
+  <li><strong>Pago por uso:</strong> Pagas solo por lo que consumes, sin compromisos.</li>
+  <li><strong>Global en segundos:</strong> Despliegas en cualquier región del mundo.</li>
+  <li><strong>Stop guessing capacity:</strong> No necesitas adivinar cuánta capacidad necesitas.</li>
+</ul>
+
+<p><small>Fuente: <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/types-of-cloud-computing.html">AWS: Types of Cloud Computing</a></small></p>
+
+<!-- ============================================================ -->
+<h2>🌍 2. Infraestructura Global de AWS</h2>
+
+<p>AWS no es un datacenter gigante. Es una <strong>red global de datacenters agrupados</strong> en tres niveles:</p>
+
+<div class="diagram">  GLOBAL AWS
+  ┌─────────────────────────────────────────────┐
+  │  REGION (ej: us-east-1, eu-west-1)          │
+  │  ├── Availability Zone A  (datacenter(s))   │
+  │  ├── Availability Zone B  (datacenter(s))   │
+  │  ├── Availability Zone C  (datacenter(s))   │
+  │  └── Edge Locations (CloudFront caches)      │
+  └─────────────────────────────────────────────┘</div>
+
+<h3>Region</h3>
+<p>Área geográfica que contiene <strong>2 o más Availability Zones</strong>. Cada región es completamente independiente: los datos no cruzan regiones a menos que tú lo configures explícitamente. Ejemplos: <code>us-east-1</code> (N. Virginia), <code>eu-west-1</code> (Irlanda), <code>ap-southeast-2</code> (Sídney).</p>
+
+<h3>Availability Zone (AZ)</h3>
+<p>Uno o más datacenters discretos dentro de una región. Cada AZ tiene energía, redes y conectividad independientes. Están aislados entre sí (si un terremoto golpea una AZ, las otras no se ven afectadas) pero conectados con fibra de <strong>alta velocidad y baja latencia (&lt;2ms)</strong>.</p>
+
+<div class="info">
+<strong>💡 Clave para el examen:</strong> <em>"Multi-AZ"</em> es el mínimo para alta disponibilidad. Una app desplegada en una sola AZ puede caer si esa AZ falla. Dos AZs = tolerancia a fallos.
+</div>
+
+<h3>Edge Location</h3>
+<p>Son sitios de borde de <strong>CloudFront</strong> (CDN) que cachean contenido estático y dinámico cerca del usuario. Hay ~600+ Edge Locations globales. No son AZs — solo cachean datos, no ejecutan cómputo general.</p>
+
+<h3>¿Cómo elegir una región?</h3>
+<ol>
+  <li><strong>Latencia:</strong> La más cercana a tus usuarios.</li>
+  <li><strong>Cumplimiento:</strong> Datos deben residir en ciertos países (GDPR).</li>
+  <li><strong>Costo:</strong> No todas las regiones cuestan igual.</li>
+  <li><strong>Servicios disponibles:</strong> No todos los servicios están en todas las regiones.</li>
+</ol>
+
+<p><small>Fuente: <a href="https://aws.amazon.com/about-aws/global-infrastructure/">AWS Global Infrastructure</a></small></p>
+
+<!-- ============================================================ -->
+<h2>🛠️ 3. Laboratorio: Tu Primera Cuenta AWS</h2>
+
+<p>Vamos a poner manos a la obra. Sigue estos pasos:</p>
+
+<ol class="step-list">
+  <li>
+    <strong>Crear cuenta AWS Free Tier</strong><br>
+    Ve a <a href="https://aws.amazon.com/free/" target="_blank">aws.amazon.com/free</a> y haz clic en "Crear una cuenta AWS".
+    <ul>
+      <li>Usa tu email personal (no corporativo — esto es para estudio).</li>
+      <li>La cuenta root requiere: email + contraseña + datos de tarjeta de crédito (para verificar identidad).</li>
+      <li><strong>No te preocupes:</strong> La Free Tier incluye 750h/mes de EC2 t2.micro, 5GB S3, y más durante 12 meses.</li>
+      <li>Se te cobrará una verificación temporal (~$1-2 USD) que se reembolsa.</li>
+      <li><em>Si ya tienes cuenta, salta este paso.</em></li>
+    </ul>
+  </li>
+  <li>
+    <strong>Habilitar MFA en la cuenta root</strong><br>
+    Busca "IAM" en la consola → "Activar MFA en tu cuenta root" → "Assign MFA device".
+    <ul>
+      <li>Usa Google Authenticator, Authy, o 1Password como app TOTP.</li>
+      <li>Escanea el código QR con tu app.</li>
+      <li>¡Nunca más uses la cuenta root para nada que no sea facturación o cambios críticos!</li>
+    </ul>
+    <div class="warning">
+      <strong>⚠️ Seguridad:</strong> Sin MFA, tu cuenta es vulnerable. Es el paso más importante de seguridad en AWS.
+    </div>
+  </li>
+  <li>
+    <strong>Crear un usuario IAM administrador</strong><br>
+    IAM → Users → Create user → Nombre: <code>admin</code> → Attach policy: <code>AdministratorAccess</code>.
+    <ul>
+      <li>Habilita "Provide user access to the AWS Management Console".</li>
+      <li>Establece una contraseña temporal.</li>
+      <li>Al primer login, te pedirá crear una nueva contraseña + habilitar MFA (¡hazlo!).</li>
+      <li><strong>Usa este usuario para todo tu trabajo diario</strong>, no el root.</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Explorar la consola</strong><br>
+    En la barra superior derecha, encuentra el selector de regiones.
+    <ul>
+      <li>Cambia entre <code>US East (N. Virginia)</code> y <code>EU (Ireland)</code>.</li>
+      <li>Busca "EC2" en la barra de búsqueda — ve la pantalla de lanzamiento de instancias (sin crear nada).</li>
+      <li>Busca "S3" — ve la pantalla de buckets.</li>
+      <li>Busca "VPC" — ve el panel de VPCs. ¿Cuántas VPCs ves? (pista: hay una default).</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Instalar AWS CLI</strong><br>
+    <pre>curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg AWSCLIV2.pkg -target /
+aws --version</pre>
+    <p>Luego configura tu perfil:</p>
+    <pre>aws configure
+AWS Access Key ID: [crea una en IAM → Security credentials → Create access key]
+AWS Secret Access Key: [copia secreta]
+Default region name: us-east-1
+Default output format: json</pre>
+    <p>Prueba que funciona:</p>
+    <pre>aws ec2 describe-regions --output table</pre>
+    <p>¡Deberías ver una tabla con todas las regiones AWS!</p>
+  </li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>🧪 4. Mini-Quiz</h2>
+
+<p>Responde estas preguntas para verificar lo aprendido.</p>
+
+<div class="quiz-question">
+  <p>1. ¿Cuántas Availability Zones debe tener una región como mínimo?</p>
+  <label><input type="radio" name="q1" value="1"> 1 AZ — un datacenter es suficiente</label>
+  <label><input type="radio" name="q1" value="2"> 2 AZs — para alta disponibilidad</label>
+  <label><input type="radio" name="q1" value="3"> 3 AZs — todas las regiones tienen 3</label>
+  <label><input type="radio" name="q1" value="4"> Depende del servicio</label>
+  <button class="quiz-btn" onclick="showAnswer('q1')">Ver respuesta</button>
+  <div class="quiz-answer" id="q1-answer"><strong>✅ 2 AZs</strong> — Cada región tiene al menos 2 AZs (algunas hasta 6). Esto permite alta disponibilidad Multi-AZ.</div>
+</div>
+
+<div class="quiz-question">
+  <p>2. Como backend developer, ¿cuál modelo de cloud te da más control sobre el SO y runtime?</p>
+  <label><input type="radio" name="q2" value="1"> SaaS — solo configuras la app</label>
+  <label><input type="radio" name="q2" value="2"> PaaS — subes tu código y AWS gestiona el SO</label>
+  <label><input type="radio" name="q2" value="3"> IaaS — gestionas SO, app, redes</label>
+  <label><input type="radio" name="q2" value="4"> Todas son iguales</label>
+  <button class="quiz-btn" onclick="showAnswer('q2')">Ver respuesta</button>
+  <div class="quiz-answer" id="q2-answer"><strong>✅ IaaS</strong> — Con IaaS (EC2) tienes control total del SO, runtime, librerías y configuración. Es como alquilar un servidor dedicado.</div>
+</div>
+
+<div class="quiz-question">
+  <p>3. ¿Qué usas para interactuar con AWS desde tu terminal?</p>
+  <label><input type="radio" name="q3" value="1"> AWS Management Console</label>
+  <label><input type="radio" name="q3" value="2"> AWS SDK</label>
+  <label><input type="radio" name="q3" value="3"> AWS CLI</label>
+  <label><input type="radio" name="q3" value="4"> SQS</label>
+  <button class="quiz-btn" onclick="showAnswer('q3')">Ver respuesta</button>
+  <div class="quiz-answer" id="q3-answer"><strong>✅ AWS CLI</strong> — El CLI te permite ejecutar comandos AWS desde tu terminal. Los SDKs son para integrar AWS en tu código.</div>
+</div>
+
+<div class="quiz-question">
+  <p>4. ¿Cuál es la diferencia principal entre una Region y un Edge Location?</p>
+  <label><input type="radio" name="q4" value="1"> Son lo mismo, solo cambia el nombre</label>
+  <label><input type="radio" name="q4" value="2"> Una Region ejecuta servicios (EC2, RDS), un Edge Location solo cachea contenido</label>
+  <label><input type="radio" name="q4" value="3"> Un Edge Location es más grande que una Region</label>
+  <label><input type="radio" name="q4" value="4"> Las Edge Locations están solo en US</label>
+  <button class="quiz-btn" onclick="showAnswer('q4')">Ver respuesta</button>
+  <div class="quiz-answer" id="q4-answer"><strong>✅ Las Regions ejecutan servicios de cómputo y almacenamiento</strong>. Los Edge Locations son solo puntos de cacheo de CloudFront para servir contenido cerca del usuario.</div>
+</div>
+
+<div class="quiz-question">
+  <p>5. ¿Por qué deberías crear un usuario IAM en lugar de usar la cuenta root?</p>
+  <label><input type="radio" name="q5" value="1"> La cuenta root tiene menos permisos</label>
+  <label><input type="radio" name="q5" value="2"> La cuenta root tiene acceso total y sin restricciones — es peligrosa para uso diario</label>
+  <label><input type="radio" name="q5" value="3"> La cuenta root expira después de 30 días</label>
+  <label><input type="radio" name="q5" value="4"> Los usuarios IAM son gratis, la cuenta root cuesta</label>
+  <button class="quiz-btn" onclick="showAnswer('q5')">Ver respuesta</button>
+  <div class="quiz-answer" id="q5-answer"><strong>✅ La cuenta root tiene acceso total y sin restricciones</strong>. Por seguridad, se recomienda crear usuarios IAM con permisos limitados (least privilege) para el trabajo diario.</div>
+</div>
+
+<!-- ============================================================ -->
+<h2>📋 5. Checklist de finalización</h2>
+
+<p>Marca lo que hayas completado:</p>
+<ul>
+  <li class="task">☐ Creé mi cuenta AWS Free Tier.</li>
+  <li class="task">☐ Habilité MFA en mi cuenta root.</li>
+  <li class="task">☐ Creé un usuario IAM admin con MFA.</li>
+  <li class="task">☐ Exploré la consola AWS (EC2, S3, VPC).</li>
+  <li class="task">☐ Instalé y configuré AWS CLI.</li>
+  <li class="task">☐ Ejecuté <code>aws ec2 describe-regions</code>.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>🔗 Recursos de esta lección</h2>
+<ul>
+  <li><a href="../reference/aws-global-infrastructure.html">AWS Global Infrastructure — Reference Sheet</a></li>
+  <li><a href="https://aws.amazon.com/free/">AWS Free Tier</a></li>
+  <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">Instalación AWS CLI</a></li>
+  <li><a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/types-of-cloud-computing.html">AWS: Tipos de Cloud Computing</a></li>
+  <li><a href="https://aws.amazon.com/about-aws/global-infrastructure/">AWS Global Infrastructure</a></li>
+  <li><a href="../GLOSSARY.md">Glosario AWS</a></li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>🤔 ¿Dudas? ¡Pregunta!</h2>
+
+<p>Si algo no quedó claro, o si te trabaste en algún paso, dime. Como tu mentor, estoy aquí para ayudarte a superar cualquier obstáculo antes de pasar a la siguiente lección.</p>
+
+<div class="footer">
+  AWS Solutions Architect — Lección 1/50 · Hecho para el estudio autoguiado con mentor IA
+</div>
+
+</div>
+
+<script>
+function showAnswer(q) {
+  var answer = document.getElementById(q + '-answer');
+  if (answer.style.display === 'block') {
+    answer.style.display = 'none';
+  } else {
+    answer.style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>

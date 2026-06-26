@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Global Infrastructure — Reference</title>
+<style>
+  @page { margin: 1.5cm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background: #f8f9fa;
+    padding: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+    color: #ff9900;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    color: #6c757d;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin: 2rem 0 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid #ff9900;
+    color: #232f3e;
+  }
+  h3 {
+    font-size: 1rem;
+    margin: 1.25rem 0 0.5rem;
+    color: #232f3e;
+  }
+  p, li { color: #333; }
+  ul { padding-left: 1.25rem; }
+  li { margin-bottom: 0.3rem; }
+
+  /* Diagram */
+  .diagram {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  th {
+    background: #232f3e;
+    color: #fff;
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #eee;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f1f3f5; }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .card h4 {
+    color: #ff9900;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+  .card p {
+    font-size: 0.85rem;
+    color: #555;
+  }
+  .card .tag {
+    display: inline-block;
+    background: #fff3e0;
+    color: #e65100;
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .diagram { border: 1px solid #ccc; }
+    .card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+    table { box-shadow: none; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🌐 AWS Global Infrastructure</h1>
+<p class="subtitle">Regions, Availability Zones, Edge Locations &amp; Service Endpoints — Reference Sheet</p>
+
+<h2>Jerarquía</h2>
+<div class="diagram">AWS Global ──────────────────────────────────────────────
+│
+├── <b>Region</b> (us-east-1, eu-west-1, ap-southeast-2)
+│   ├── <b>Availability Zone</b> (us-east-1a, us-east-1b, us-east-1c)
+│   │   ├── Datacenter(s) — aislados físicamente
+│   │   ├── Redes, energía, refrigeración independientes
+│   │   └── Conectados con fibra de baja latencia (&lt;2ms)
+│   │
+│   └── <b>Edge Locations</b> (CloudFront — caching, ~600+ global)
+│
+└── <b>Regional Services</b>  vs  <b>Global Services</b>
+    (EC2, RDS, Lambda)        (IAM, Route 53, CloudFront)</div>
+
+<h2>Regiones Actuales (2026)</h2>
+<table>
+  <tr><th>Código</th><th>Nombre</th><th>AZs</th></tr>
+  <tr><td>us-east-1</td><td>US East (N. Virginia)</td><td>6</td></tr>
+  <tr><td>us-east-2</td><td>US East (Ohio)</td><td>3</td></tr>
+  <tr><td>us-west-1</td><td>US West (N. California)</td><td>3</td></tr>
+  <tr><td>us-west-2</td><td>US West (Oregon)</td><td>4</td></tr>
+  <tr><td>eu-west-1</td><td>EU (Ireland)</td><td>3</td></tr>
+  <tr><td>eu-west-2</td><td>EU (London)</td><td>3</td></tr>
+  <tr><td>eu-west-3</td><td>EU (Paris)</td><td>3</td></tr>
+  <tr><td>eu-central-1</td><td>EU (Frankfurt)</td><td>3</td></tr>
+  <tr><td>eu-north-1</td><td>EU (Stockholm)</td><td>3</td></tr>
+  <tr><td>eu-south-1</td><td>EU (Milan)</td><td>3</td></tr>
+  <tr><td>ap-southeast-1</td><td>Asia Pacific (Singapore)</td><td>3</td></tr>
+  <tr><td>ap-southeast-2</td><td>Asia Pacific (Sydney)</td><td>3</td></tr>
+  <tr><td>ap-northeast-1</td><td>Asia Pacific (Tokyo)</td><td>4</td></tr>
+  <tr><td>ap-northeast-2</td><td>Asia Pacific (Seoul)</td><td>4</td></tr>
+  <tr><td>ap-south-1</td><td>Asia Pacific (Mumbai)</td><td>3</td></tr>
+  <tr><td>sa-east-1</td><td>South America (São Paulo)</td><td>3</td></tr>
+  <tr><td>me-south-1</td><td>Middle East (Bahrain)</td><td>3</td></tr>
+  <tr><td>ca-central-1</td><td>Canada (Central)</td><td>3</td></tr>
+  <tr><td>af-south-1</td><td>Africa (Cape Town)</td><td>3</td></tr>
+</table>
+<p><em>La cantidad de AZs varía por región. Siempre verificar en <a href="https://aws.amazon.com/about-aws/global-infrastructure/">documentación oficial</a>.</em></p>
+
+<h2>Cómo Elegir una Región</h2>
+<div class="card-grid">
+  <div class="card">
+    <div class="tag">Latencia</div>
+    <h4>Proximidad</h4>
+    <p>Elige la región más cercana a tus usuarios para minimizar latencia.</p>
+  </div>
+  <div class="card">
+    <div class="tag">Cumplimiento</div>
+    <h4>Residencia de Datos</h4>
+    <p>Algunos datos deben residir en países específicos (GDPR, leyes locales).</p>
+  </div>
+  <div class="card">
+    <div class="tag">Costo</div>
+    <h4>Precios Regionales</h4>
+    <p>No todos los servicios cuestan igual en todas partes. Sudamérica es más cara que US East.</p>
+  </div>
+  <div class="card">
+    <div class="tag">Servicios</div>
+    <h4>Disponibilidad</h4>
+    <p>No todos los servicios están en todas las regiones. Revisa la tabla de servicios regionales.</p>
+  </div>
+</div>
+
+<h2>Global vs Regional Services</h2>
+<table>
+  <tr><th>Servicios Globales</th><th>Servicios Regionales</th></tr>
+  <tr><td>IAM</td><td>EC2, Lambda, ELB</td></tr>
+  <tr><td>Route 53 (DNS)</td><td>S3 (los buckets son global, datos regionales)</td></tr>
+  <tr><td>CloudFront (CDN)</td><td>RDS, DynamoDB</td></tr>
+  <tr><td>WAF</td><td>VPC, Subnets, NACLs</td></tr>
+  <tr><td>Budgets &amp; Billing</td><td>ECS, EKS, ECR</td></tr>
+</table>
+
+<h2>Service Endpoints</h2>
+<p>Formato general de endpoints de AWS:</p>
+<table>
+  <tr><th>Tipo</th><th>Formato</th><th>Ejemplo</th></tr>
+  <tr><td>Regional</td><td><code>service.region.amazonaws.com</code></td><td><code>ec2.us-east-1.amazonaws.com</code></td></tr>
+  <tr><td>Global</td><td><code>service.amazonaws.com</code></td><td><code>iam.amazonaws.com</code></td></tr>
+  <tr><td>VPC Endpoint</td><td><code>service.region.vpce.amazonaws.com</code></td><td><code>s3.us-east-1.vpce.amazonaws.com</code></td></tr>
+  <tr><td>Dual-stack (IPv6)</td><td><code>service.region.api.aws</code></td><td><code>ec2.us-east-1.api.aws</code></td></tr>
+</table>
+
+<h2>Edge Locations vs Regional Edge Caches</h2>
+<table>
+  <tr><th></th><th>Edge Location</th><th>Regional Edge Cache</th></tr>
+  <tr><td>Propósito</td><td>Cacheo de contenido cerca del usuario</td><td>Cacheo intermedio entre origin y edge</td></tr>
+  <tr><td>Cantidad</td><td>~600+ global</td><td>~1 por región</td></tr>
+  <tr><td>TTL</td><td>Corto (segundos-minutos)</td><td>Largo (minutos-horas)</td></tr>
+  <tr><td>Uso</td><td>Objetos populares</td><td>Objetos menos populares</td></tr>
+</table>
+
+<h2>AZ Naming</h2>
+<div class="diagram">us-east-1a  →  AZ "a" en us-east-1
+us-east-1b  →  AZ "b" en us-east-1
+us-east-1c  →  AZ "c" en us-east-1
+
+⚠️ Las letras de AZ NO son consistentes entre cuentas.
+    Tu us-east-1a puede ser diferente al de otro usuario.
+    Usa <b>AZ IDs</b> (use1-az1, use1-az2) para identificar AZs exactas.</div>
+
+</body>
+</html>
