@@ -1,0 +1,929 @@
+{
+  "course": "AWS Solutions Architect (Associate)",
+  "description": "Curso intensivo para backend developers que quieren dominar AWS desde cero y prepararse para la certificación SAA-C03 con conocimientos prácticos aplicables. 100% free tier: todas las prácticas usan solo recursos del AWS Free Tier.",
+  "duration_weeks": 10,
+  "total_sessions": 50,
+  "schedule_pattern": "Lunes-Viernes",
+  "modules": [
+    {
+      "week": 1,
+      "theme": "Fundamentos de AWS & IAM",
+      "milestones": [
+        {
+          "id": "w1d1",
+          "label": "Cloud Computing & Infraestructura Global",
+          "status": "current",
+          "prerequisites": [],
+          "topics": [
+            "¿Qué es cloud computing? (IAAS, PAAS, SAAS)",
+            "AWS Global Infrastructure: Regions, AZs, Edge Locations",
+            "Creación de cuenta AWS y Free Tier",
+            "AWS Management Console, CLI, SDKs"
+          ],
+          "practice_problems": [
+            "Configurar cuenta AWS con MFA",
+            "Explorar todas las regiones desde la consola",
+            "Instalar y configurar AWS CLI"
+          ]
+        },
+        {
+          "id": "w1d2",
+          "label": "Pricing, Facturación & Soporte",
+          "status": "locked",
+          "prerequisites": ["w1d1"],
+          "topics": [
+            "Modelos de pricing: On-Demand, Reserved, Spot",
+            "AWS Pricing Calculator y TCO",
+            "AWS Budgets, Cost Explorer, Alarms de facturación",
+            "AWS Support Plans (Basic, Developer, Business, Enterprise)",
+            "AWS Organizations: cuentas, SCPs, Consolidated Billing"
+          ],
+          "practice_problems": [
+            "Configurar un budget de $10/mes",
+            "Calcular costo de 3 servidores EC2 t3.medium",
+            "Explorar AWS Organizations en la consola"
+          ]
+        },
+        {
+          "id": "w1d3",
+          "label": "IAM: Usuarios, Grupos & Políticas",
+          "status": "locked",
+          "prerequisites": ["w1d2"],
+          "topics": [
+            "Modelo de Responsabilidad Compartida",
+            "IAM Users, Groups, Roles (visión general)",
+            "IAM Policies: estructura (Effect, Action, Resource, Condition)",
+            "Managed vs Inline Policies",
+            "MFA, password policy, access keys",
+            "IAM best practices (least privilege)"
+          ],
+          "practice_problems": [
+            "Crear usuarios con permisos diferenciados",
+            "Crear y asignar una policy managed de solo lectura",
+            "Habilitar MFA en tu cuenta root"
+          ]
+        },
+        {
+          "id": "w1d4",
+          "label": "IAM: Roles, Trust Policies & Avanzado",
+          "status": "locked",
+          "prerequisites": ["w1d3"],
+          "topics": [
+            "IAM Roles: trust policies, permissions boundaries",
+            "Service-linked roles, service roles",
+            "IAM Policy Conditions: IP, time, tags",
+            "IAM Access Analyzer, IAM Policy Simulator",
+            "AWS STS: AssumeRole, web identity federation"
+          ],
+          "practice_problems": [
+            "Crear un rol EC2 con acceso a S3",
+            "Usar el Policy Simulator para debuggear acceso",
+            "Implementar una condition policy por IP"
+          ]
+        },
+        {
+          "id": "w1d5",
+          "label": "IAM Project: Seguridad de Cuenta",
+          "status": "locked",
+          "prerequisites": ["w1d4"],
+          "topics": [
+            "Repaso general de IAM",
+            "AWS Config rules para IAM",
+            "Proyecto integrador: Auditoría de seguridad"
+          ],
+          "practice_problems": [
+            "Proyecto: Configurar cuenta AWS segura con IAM",
+            "Auditar usuarios y permisos con IAM Access Analyzer",
+            "Configurar reglas de AWS Config para IAM"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "theme": "EC2 & Compute",
+      "milestones": [
+        {
+          "id": "w2d1",
+          "label": "EC2 Fundamentals",
+          "status": "locked",
+          "prerequisites": ["w1d5"],
+          "topics": [
+            "EC2 instance types: naming (t3.medium, c5.large, etc.)",
+            "EC2 Free Tier: t2.micro/t3.micro (750h/mes, 12 meses)",
+            "AMIs y su ciclo de vida",
+            "Security Groups: reglas, stateful vs stateless",
+            "EC2 User Data, bootstrap scripts",
+            "Key pairs: .pem (SSH), .ppk (PuTTY)"
+          ],
+          "practice_problems": [
+            "Lanzar una instancia EC2 con Apache via User Data",
+            "SSH a la instancia y explorar",
+            "Configurar Security Group para HTTP/HTTPS"
+          ]
+        },
+        {
+          "id": "w2d2",
+          "label": "EC2 Storage & Networking",
+          "status": "locked",
+          "prerequisites": ["w2d1"],
+          "topics": [
+            "EBS: gp3, io1/io2, st1, sc1",
+            "Elastic IP vs Public IP vs Private IP",
+            "ENI (Elastic Network Interface)",
+            "Instance Metadata (169.254.169.254)",
+            "EBS Snapshots, AMI creation"
+          ],
+          "practice_problems": [
+            "Adjuntar y montar un volumen EBS adicional",
+            "Crear un snapshot y restaurarlo",
+            "Usar Instance Metadata para obtener info de la instancia"
+          ]
+        },
+        {
+          "id": "w2d3",
+          "label": "EC2 Advanced Features",
+          "status": "locked",
+          "prerequisites": ["w2d2"],
+          "topics": [
+            "Placement Groups: cluster, spread, partition",
+            "Dedicated Hosts vs Dedicated Instances",
+            "EC2 Hibernate",
+            "EC2 Instance Recovery (CloudWatch alarm)"
+          ],
+          "practice_problems": [
+            "Crear placement group spread con 2 instancias",
+            "Configurar hibernate en EC2",
+            "Crear alarm de recuperación automática"
+          ]
+        },
+        {
+          "id": "w2d4",
+          "label": "EC2 Pricing & Optimización",
+          "status": "locked",
+          "prerequisites": ["w2d3"],
+          "topics": [
+            "On-Demand, Reserved Instances, Savings Plans",
+            "Spot Instances: cómo funcionan, spot fleet",
+            "EC2 Fleet, burstable vs non-burstable",
+            "Cost optimization strategies"
+          ],
+          "practice_problems": [
+            "Calcular ahorro con Reserved vs On-Demand",
+            "Solicitar Spot Instance con spot request",
+            "Analizar costos en Cost Explorer"
+          ]
+        },
+        {
+          "id": "w2d5",
+          "label": "EC2 Project: Deploy Web App",
+          "status": "locked",
+          "prerequisites": ["w2d4"],
+          "topics": [
+            "Repaso EC2 completo",
+            "Proyecto: Deploy de API backend en EC2",
+            "Backend seguro con solo HTTP/HTTPS",
+            "Instance Metadata hardening"
+          ],
+          "practice_problems": [
+            "Proyecto: Deploy API REST Node.js/Express en EC2",
+            "Configurar Security Groups para backend",
+            "Automatizar boot con User Data"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "theme": "Auto Scaling & Alta Disponibilidad (Free Tier)",
+      "milestones": [
+        {
+          "id": "w3d1",
+          "label": "ELB Theory & Route 53 HA",
+          "status": "locked",
+          "prerequisites": ["w2d5"],
+          "topics": [
+            "ALB, NLB, Gateway Load Balancer (conceptos — sin costo)",
+            "Listeners, target groups, rules (teoría)",
+            "Route 53 health checks como alternativa gratuita a ELB",
+            "DNS failover vs ELB: cuándo usar cada uno"
+          ],
+          "practice_problems": [
+            "Diseñar arquitectura HA solo con Route 53 + EC2",
+            "Configurar health check en Route 53 para instancia EC2",
+            "Simular failover DNS con health checks"
+          ]
+        },
+        {
+          "id": "w3d2",
+          "label": "HA con Route 53 & EC2",
+          "status": "locked",
+          "prerequisites": ["w3d1"],
+          "topics": [
+            "Stickiness, SSL/TLS, SNI (conceptos ELB — solo teoría)",
+            "Cross-zone load balancing (concepto)",
+            "Route 53 routing policies para HA: failover, weighted, latency",
+            "Connection draining: concepto e implementación manual"
+          ],
+          "practice_problems": [
+            "Configurar failover routing entre 2 instancias EC2 en distintas AZ",
+            "Probar weighted routing para canary deployments",
+            "Documentar diferencias ELB vs Route 53 para HA"
+          ]
+        },
+        {
+          "id": "w3d3",
+          "label": "Auto Scaling Groups (Free Tier)",
+          "status": "locked",
+          "prerequisites": ["w3d2"],
+          "topics": [
+            "Launch templates vs launch configurations",
+            "ASG: min, max, desired capacity (min=1 para free tier)",
+            "Scaling policies: dynamic (target tracking, step, simple)",
+            "Scheduled scaling, cooldown periods"
+          ],
+          "practice_problems": [
+            "Crear ASG con launch template (min=1, max=2 — free tier safe)",
+            "Configurar target tracking scaling basado en CPU",
+            "Probar scheduled scaling para horas pico"
+          ]
+        },
+        {
+          "id": "w3d4",
+          "label": "ASG Advanced & Health Checks",
+          "status": "locked",
+          "prerequisites": ["w3d3"],
+          "topics": [
+            "ASG integration: cómo funciona con ELB (concepto)",
+            "Lifecycle hooks: pending, terminating",
+            "Termination policies, instance refresh",
+            "EC2 status checks vs Route 53 health checks (free tier)"
+          ],
+          "practice_problems": [
+            "Configurar lifecycle hook para notificar SNS",
+            "Probar termination policy más antigua",
+            "Comparar health checks: EC2, Route 53 y ELB (teórico)"
+          ]
+        },
+        {
+          "id": "w3d5",
+          "label": "HA Project: Arquitectura Escalable (Free Tier)",
+          "status": "locked",
+          "prerequisites": ["w3d4"],
+          "topics": [
+            "Patrones de alta disponibilidad sin ELB",
+            "Multi-AZ con Route 53 + ASG + EC2",
+            "Arquitectura HA completa 100% free tier"
+          ],
+          "practice_problems": [
+            "Proyecto: 2 EC2 t2.micro en distintas AZ con Route 53 failover",
+            "Probar failover: detener instancia primaria",
+            "Documentar arquitectura HA free tier"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "theme": "Lambda, API Gateway & Serverless",
+      "milestones": [
+        {
+          "id": "w4d1",
+          "label": "Lambda Fundamentals",
+          "status": "locked",
+          "prerequisites": ["w3d5"],
+          "topics": [
+            "Funciones Lambda: runtime, handler, event object",
+            "Triggers: S3, DynamoDB Streams, API Gateway, SQS, SNS",
+            "Execution role, resource policy",
+            "Pricing: requests, duration, provisioned concurrency"
+          ],
+          "practice_problems": [
+            "Crear función Lambda Hello World",
+            "Probar con diferentes triggers",
+            "Calcular costo de 1M invocaciones"
+          ]
+        },
+        {
+          "id": "w4d2",
+          "label": "Lambda Advanced",
+          "status": "locked",
+          "prerequisites": ["w4d1"],
+          "topics": [
+            "Lambda Layers, environment variables",
+            "Lambda versions, aliases, weights",
+            "VPC integration: ENI, subnets, SG",
+            "Lambda limits: timeout, memory, /tmp, concurrency",
+            "Provisioned concurrency, reserved concurrency"
+          ],
+          "practice_problems": [
+            "Crear Layer para dependencias compartidas",
+            "Configurar Lambda en VPC para DB privada",
+            "Implementar versioning con alias"
+          ]
+        },
+        {
+          "id": "w4d3",
+          "label": "API Gateway",
+          "status": "locked",
+          "prerequisites": ["w4d2"],
+          "topics": [
+            "REST API vs HTTP API vs WebSocket API",
+            "Stages, deployments, canary releases",
+            "Authorization: Cognito, IAM, Lambda authorizer",
+            "Caching, throttling, request/response validation"
+          ],
+          "practice_problems": [
+            "Crear API REST con endpoints CRUD",
+            "Configurar autorización con API Key",
+            "Desplegar a stage production"
+          ]
+        },
+        {
+          "id": "w4d4",
+          "label": "Patrones Serverless",
+          "status": "locked",
+          "prerequisites": ["w4d3"],
+          "topics": [
+            "EventBridge: eventos, rules, targets",
+            "Step Functions: state machines, workflows",
+            "Patrón saga, fan-out, parallel processing",
+            "Serverless vs EC2: cuándo usar cada uno"
+          ],
+          "practice_problems": [
+            "Crear regla EventBridge para Lambda",
+            "Diseñar Step Function con 3 estados",
+            "Evaluar: ¿serverless o EC2 para tu API?"
+          ]
+        },
+        {
+          "id": "w4d5",
+          "label": "Serverless Project: REST API Completa",
+          "status": "locked",
+          "prerequisites": ["w4d4"],
+          "topics": [
+            "Proyecto: API REST serverless completa",
+            "Lambda + API Gateway + DynamoDB",
+            "CI/CD básico para serverless"
+          ],
+          "practice_problems": [
+            "Proyecto: CRUD API para un blog/libros",
+            "Implementar autorización con Lambda authorizer",
+            "Desplegar con SAM o Serverless Framework"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "theme": "S3 & Almacenamiento",
+      "milestones": [
+        {
+          "id": "w5d1",
+          "label": "S3 Fundamentals",
+          "status": "locked",
+          "prerequisites": ["w4d5"],
+          "topics": [
+            "S3 buckets, objetos, keys, ARN",
+            "S3 APIs: GET, PUT, DELETE, ListObjects",
+            "S3 storage classes: Standard, IA, One Zone-IA, Glacier, Deep Archive",
+            "Versioning, MFA Delete"
+          ],
+          "practice_problems": [
+            "Crear bucket con versioning",
+            "Subir y versionar objetos",
+            "Explorar storage classes y costos"
+          ]
+        },
+        {
+          "id": "w5d2",
+          "label": "S3 Security & Encryption",
+          "status": "locked",
+          "prerequisites": ["w5d1"],
+          "topics": [
+            "Block Public Access, bucket policies",
+            "ACLs (legacy), presigned URLs",
+            "SSE-S3, SSE-KMS, SSE-C, DSSE-KMS",
+            "Object Lock: WORM, retention, legal hold"
+          ],
+          "practice_problems": [
+            "Configurar bucket policy para CloudFront",
+            "Implementar SSE-KMS en S3",
+            "Crear presigned URL para descarga temporal"
+          ]
+        },
+        {
+          "id": "w5d3",
+          "label": "S3 Advanced Features",
+          "status": "locked",
+          "prerequisites": ["w5d2"],
+          "topics": [
+            "Lifecycle rules: transiciones, expiración",
+            "S3 Static Website Hosting",
+            "S3 Cross-Region Replication (CRR), Same-Region (SRR)",
+            "S3 Transfer Acceleration, S3 Select, S3 Batch Operations",
+            "S3 Event Notifications"
+          ],
+          "practice_problems": [
+            "Configurar lifecycle para mover a Glacier tras 30 días",
+            "Hostear sitio estático en S3",
+            "Configurar CRR entre dos regiones"
+          ]
+        },
+        {
+          "id": "w5d4",
+          "label": "EBS, EFS & Storage Gateway",
+          "status": "locked",
+          "prerequisites": ["w5d3"],
+          "topics": [
+            "EBS: snapshots, fast snapshot restore, recycle bin",
+            "EFS: performance modes, throughput, lifecycle",
+            "Instance Store vs EBS vs EFS",
+            "Storage Gateway: File, Volume, Tape Gateway",
+            "AWS FSx: Lustre, Windows File Server, ONTAP, OpenZFS"
+          ],
+          "practice_problems": [
+            "Crear EFS y montar en 2 EC2 simultáneamente",
+            "Configurar EBS snapshot lifecycle",
+            "Simular Storage Gateway File Gateway"
+          ]
+        },
+        {
+          "id": "w5d5",
+          "label": "Storage Project: Static Site + Shared Storage",
+          "status": "locked",
+          "prerequisites": ["w5d4"],
+          "topics": [
+            "Proyecto: Arquitectura de almacenamiento",
+            "S3 + CloudFront para CDN",
+            "EFS para almacenamiento compartido entre EC2"
+          ],
+          "practice_problems": [
+            "Proyecto: Hostear SPA en S3 + CloudFront + Route 53",
+            "Configurar EFS para 3 instancias EC2",
+            "Implementar backup lifecycle policies"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "theme": "Bases de Datos",
+      "milestones": [
+        {
+          "id": "w6d1",
+          "label": "RDS Fundamentals",
+          "status": "locked",
+          "prerequisites": ["w5d5"],
+          "topics": [
+            "RDS engines: MySQL, PostgreSQL, MariaDB, Oracle, SQL Server",
+            "Multi-AZ deployments, Read Replicas",
+            "Automated backups, manual snapshots, point-in-time restore",
+            "RDS Subnet Groups, Security Groups, Parameter Groups"
+          ],
+          "practice_problems": [
+            "Crear RDS MySQL Multi-AZ",
+            "Configurar Read Replica para reportes",
+            "Probar point-in-time restore"
+          ]
+        },
+        {
+          "id": "w6d2",
+          "label": "RDS Advanced & Aurora",
+          "status": "locked",
+          "prerequisites": ["w6d1"],
+          "topics": [
+            "RDS Proxy: connection pooling, IAM auth",
+            "Enhanced Monitoring, Performance Insights",
+            "Amazon Aurora: MySQL/PostgreSQL compatible",
+            "Aurora Serverless, Aurora Global Database",
+            "Aurora Replicas, Auto Scaling"
+          ],
+          "practice_problems": [
+            "Migrar RDS MySQL a Aurora",
+            "Configurar RDS Proxy para Lambda",
+            "Crear Aurora Global Database"
+          ]
+        },
+        {
+          "id": "w6d3",
+          "label": "DynamoDB",
+          "status": "locked",
+          "prerequisites": ["w6d2"],
+          "topics": [
+            "Tablas, items, partition key, sort key",
+            "LSI (Local Secondary Index), GSI (Global Secondary Index)",
+            "DAX (DynamoDB Accelerator)",
+            "DynamoDB Streams, TTL, Transactions",
+            "Capacity modes: on-demand vs provisioned"
+          ],
+          "practice_problems": [
+            "Crear tabla DynamoDB con GSI",
+            "Configurar DynamoDB Accelerator (DAX) — solo diseño, no implementar (servicio pago)",
+            "Configurar TTL para expiración de items"
+          ]
+        },
+        {
+          "id": "w6d4",
+          "label": "ElastiCache & MemoryDB",
+          "status": "locked",
+          "prerequisites": ["w6d3"],
+          "topics": [
+            "Redis vs Memcached",
+            "ElastiCache: clusters, replication, sharding",
+            "Caching strategies: lazy loading, write-through",
+            "Session management con ElastiCache",
+            "MemoryDB for Redis (persistente)"
+          ],
+          "practice_problems": [
+            "Diseñar arquitectura con ElastiCache Redis (sin implementar — servicio pago)",
+            "Implementar lazy loading para API",
+            "Diseñar sesiones de app con ElastiCache (ejercicio teórico — servicio time-limited free)"
+          ]
+        },
+        {
+          "id": "w6d5",
+          "label": "Database Project: Backend Multi-DB",
+          "status": "locked",
+          "prerequisites": ["w6d4"],
+          "topics": [
+            "Proyecto: App con múltiples bases de datos",
+            "RDS + DynamoDB + ElastiCache",
+            "Patrones de base de datos para backend"
+          ],
+          "practice_problems": [
+            "Proyecto: API con RDS + DynamoDB",
+            "Implementar lectura desde DynamoDB con consultas optimizadas",
+            "Comparar performance RDS vs DynamoDB para diferentes cargas"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "theme": "VPC & Networking I",
+      "milestones": [
+        {
+          "id": "w7d1",
+          "label": "VPC Fundamentals",
+          "status": "locked",
+          "prerequisites": ["w6d5"],
+          "topics": [
+            "VPC, subnets (public/private), CIDR blocks",
+            "Internet Gateway (IGW), Route Tables",
+            "IP addressing: public, private, CIDR",
+            "Default VPC vs custom VPC"
+          ],
+          "practice_problems": [
+            "Crear VPC con 2 subnets públicas y 2 privadas",
+            "Configurar IGW y route tables",
+            "Lanzar EC2 en subnet pública y probar conectividad"
+          ]
+        },
+        {
+          "id": "w7d2",
+          "label": "NAT & Network Security",
+          "status": "locked",
+          "prerequisites": ["w7d1"],
+          "topics": [
+            "NAT Gateway vs NAT Instance",
+            "NACLs (stateless) vs Security Groups (stateful)",
+            "NACL rules: inbound/outbound, numbered",
+            "Bastion hosts, jump boxes"
+          ],
+          "practice_problems": [
+            "Configurar NAT Instance (t2.micro en lugar de NAT Gateway — free tier)",
+            "Crear NACL restrictivo por puerto",
+            "Comparar comportamiento SG vs NACL"
+          ]
+        },
+        {
+          "id": "w7d3",
+          "label": "VPC Connectivity",
+          "status": "locked",
+          "prerequisites": ["w7d2"],
+          "topics": [
+            "VPC Peering: intra-cuenta, cross-cuenta, cross-region",
+            "VPC Endpoints: Gateway (S3, DynamoDB) e Interface (AWS PrivateLink)",
+            "AWS PrivateLink: endpoint services",
+            "Egress-only Internet Gateway (IPv6)"
+          ],
+          "practice_problems": [
+            "Crear VPC Peering entre 2 VPCs",
+            "Configurar VPC Endpoint Gateway para S3",
+            "Exponer servicio via PrivateLink"
+          ]
+        },
+        {
+          "id": "w7d4",
+          "label": "VPC Advanced",
+          "status": "locked",
+          "prerequisites": ["w7d3"],
+          "topics": [
+            "Site-to-Site VPN, Client VPN",
+            "AWS Direct Connect",
+            "Transit Gateway: hub-and-spoke, route tables",
+            "VPC Flow Logs: análisis de tráfico, Athena"
+          ],
+          "practice_problems": [
+            "Configurar VPC Flow Logs a CloudWatch",
+            "Analizar logs con Athena",
+            "Diseñar hub-and-spoke con Transit Gateway"
+          ]
+        },
+        {
+          "id": "w7d5",
+          "label": "VPC Project: Multi-Tier Architecture",
+          "status": "locked",
+          "prerequisites": ["w7d4"],
+          "topics": [
+            "Proyecto: Arquitectura multi-tier completa (free tier)",
+            "Subnets públicas (web tier) + privadas (app tier) + DB tier",
+            "EC2 en públicas como bastion, EC2 en privadas para app, RDS en DB",
+            "NAT Instance (t2.micro) para salida a internet desde privadas"
+          ],
+          "practice_problems": [
+            "Proyecto: VPC con 3 capas (web, app, db) 100% free tier",
+            "Configurar NAT Instance para subnets privadas",
+            "Bastion host EC2 para SSH a instancias privadas"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "theme": "CloudFront, Route 53 & Redes II",
+      "milestones": [
+        {
+          "id": "w8d1",
+          "label": "CloudFront",
+          "status": "locked",
+          "prerequisites": ["w7d5"],
+          "topics": [
+            "Distributions: origins (S3, ALB, EC2, HTTP), behaviors",
+            "Cache policies, origin request policies",
+            "Signed URLs, signed cookies",
+            "Origin Access Control (OAC) vs Origin Access Identity (OAI)",
+            "CloudFront Functions, Lambda@Edge",
+            "CloudFront Free Tier: 1TB/mes salida, 12 meses"
+          ],
+          "practice_problems": [
+            "Crear distribución CloudFront con S3 origin",
+            "Configurar signed URLs para contenido privado",
+            "Implementar geo-restricción"
+          ]
+        },
+        {
+          "id": "w8d2",
+          "label": "Route 53 Fundamentals",
+          "status": "locked",
+          "prerequisites": ["w8d1"],
+          "topics": [
+            "DNS fundamentals, hosted zones (public, private)",
+            "Routing Policies: Simple, Weighted, Latency, Failover, Geolocation, Multi-value",
+            "Alias records vs CNAME",
+            "Health checks, DNS failover"
+          ],
+          "practice_problems": [
+            "Configurar hosted zone para dominio personal",
+            "Crear weighted routing entre 2 regiones",
+            "Configurar failover routing con health checks"
+          ]
+        },
+        {
+          "id": "w8d3",
+          "label": "Route 53 Advanced",
+          "status": "locked",
+          "prerequisites": ["w8d2"],
+          "topics": [
+            "Route 53 Resolver, Resolver endpoints",
+            "Route 53 with ALB: alias records",
+            "DNSSEC signing, domain registration",
+            "Route 53 Traffic Flow, geoproximity"
+          ],
+          "practice_problems": [
+            "Configurar alias record hacia EC2 (o ALB — solo diseño, ALB es servicio pago)",
+            "Registrar dominio con Route 53",
+            "Implementar routing por latencia"
+          ]
+        },
+        {
+          "id": "w8d4",
+          "label": "Seguridad CDN & WAF (teoría)",
+          "status": "locked",
+          "prerequisites": ["w8d3"],
+          "topics": [
+            "Global Accelerator: anycast, endpoints (concepto — servicio pago)",
+            "Global Accelerator vs CloudFront: cuándo usar cada uno",
+            "AWS WAF: web ACLs, rules, rate limiting (conceptos)",
+            "AWS Shield Standard (gratuito) vs Advanced (pago)"
+          ],
+          "practice_problems": [
+            "Diseñar arquitectura con CloudFront + Route 53 (sin Global Accelerator)",
+            "Configurar restricción geográfica en CloudFront (alternativa gratuita a WAF)",
+            "Comparar Global Acc vs CloudFront (ejercicio teórico)"
+          ]
+        },
+        {
+          "id": "w8d5",
+          "label": "Networking Project: Global Architecture (Free Tier)",
+          "status": "locked",
+          "prerequisites": ["w8d4"],
+          "topics": [
+            "Proyecto: Arquitectura global con CDN + DNS",
+            "CloudFront + Route 53 + S3 (todo free tier elegible)",
+            "Geo-restricción con CloudFront como alternativa gratuita a WAF"
+          ],
+          "practice_problems": [
+            "Proyecto: App global con Route 53 + CloudFront + S3",
+            "Configurar failover entre regiones con Route 53",
+            "Implementar geo-restricción en CloudFront"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 9,
+      "theme": "Integración, Monitoreo & Seguridad",
+      "milestones": [
+        {
+          "id": "w9d1",
+          "label": "SQS",
+          "status": "locked",
+          "prerequisites": ["w8d5"],
+          "topics": [
+            "Standard vs FIFO queues",
+            "Dead-letter queues (DLQ), redrive policy",
+            "Visibility timeout, long polling, short polling",
+            "SQS with Lambda triggers",
+            "SQS access policies, encryption (SSE)"
+          ],
+          "practice_problems": [
+            "Crear cola SQS con DLQ",
+            "Configurar Lambda trigger desde SQS",
+            "Probar visibility timeout con mensajes fallidos"
+          ]
+        },
+        {
+          "id": "w9d2",
+          "label": "SNS & EventBridge",
+          "status": "locked",
+          "prerequisites": ["w9d1"],
+          "topics": [
+            "SNS: topics, subscriptions (SQS, Lambda, Email, HTTP, SMS)",
+            "SNS filtering, message attributes",
+            "EventBridge: event buses, rules, event patterns",
+            "EventBridge Scheduler, scheduled events",
+            "SNS vs EventBridge vs SQS"
+          ],
+          "practice_problems": [
+            "Crear SNS topic con SQS subscription",
+            "Configurar EventBridge rule para EC2 state changes",
+            "Diseñar pipeline S3 → SNS → SQS → Lambda"
+          ]
+        },
+        {
+          "id": "w9d3",
+          "label": "Step Functions & AppSync",
+          "status": "locked",
+          "prerequisites": ["w9d2"],
+          "topics": [
+            "Step Functions: Standard vs Express Workflows",
+            "State types: Task, Choice, Parallel, Map, Wait",
+            "Service integrations: Lambda, DynamoDB, SQS, ECS",
+            "AWS AppSync: GraphQL API, resolvers, real-time"
+          ],
+          "practice_problems": [
+            "Crear Step Function con 3 tareas secuenciales",
+            "Implementar parallel processing con Map",
+            "Diseñar workflow de orden con compensación (saga)"
+          ]
+        },
+        {
+          "id": "w9d4",
+          "label": "CloudWatch, CloudTrail & Config",
+          "status": "locked",
+          "prerequisites": ["w9d3"],
+          "topics": [
+            "CloudWatch Metrics, Logs, Logs Insights",
+            "CloudWatch Alarms, Composite Alarms, Anomaly Detection",
+            "CloudWatch Dashboards, Contributor Insights",
+            "CloudTrail: management events, data events, insights",
+            "AWS Config: rules, conformance packs, remediation"
+          ],
+          "practice_problems": [
+            "Crear dashboard CloudWatch con métricas clave",
+            "Configurar CloudTrail para data events de S3",
+            "Crear regla AWS Config para S3 public access"
+          ]
+        },
+        {
+          "id": "w9d5",
+          "label": "Security & Compliance",
+          "status": "locked",
+          "prerequisites": ["w9d4"],
+          "topics": [
+            "AWS KMS: keys, key rotation, key policies",
+            "AWS Secrets Manager vs Parameter Store (Parameter Store es gratis)",
+            "AWS Shield, WAF, GuardDuty, Security Hub",
+            "AWS Artifact, Penetration testing"
+          ],
+          "practice_problems": [
+            "Crear KMS key y usarla para S3 encryption",
+            "Configurar Parameter Store (gratis) para DB credentials en vez de Secrets Manager",
+            "Revisar findings de Security Hub"
+          ]
+        }
+      ]
+    },
+    {
+      "week": 10,
+      "theme": "Well-Architected & Certificación",
+      "milestones": [
+        {
+          "id": "w10d1",
+          "label": "Well-Architected Framework",
+          "status": "locked",
+          "prerequisites": ["w9d5"],
+          "topics": [
+            "6 pilares: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability",
+            "Design principles de cada pilar",
+            "Well-Architected Tool, revisión de arquitecturas"
+          ],
+          "practice_problems": [
+            "Evaluar arquitectura del proyecto final contra WA",
+            "Identificar mejoras en cada pilar",
+            "Ejercicio: Diseñar arquitectura WA-compliant"
+          ]
+        },
+        {
+          "id": "w10d2",
+          "label": "Alta Disponibilidad & Disaster Recovery",
+          "status": "locked",
+          "prerequisites": ["w10d1"],
+          "topics": [
+            "RPO, RTO, MTBF, MTTR",
+            "DR strategies: Backup & Restore, Pilot Light, Warm Standby, Multi-Site Active/Active",
+            "Patrones HA: Multi-AZ, Multi-Region",
+            "AWS Backup, DRS (Elastic Disaster Recovery)"
+          ],
+          "practice_problems": [
+            "Diseñar DR strategy para app web",
+            "Calcular RPO/RTO para cada strategy",
+            "Configurar AWS Backup plan"
+          ]
+        },
+        {
+          "id": "w10d3",
+          "label": "Migración & Modernización",
+          "status": "locked",
+          "prerequisites": ["w10d2"],
+          "topics": [
+            "7 Rs de migración: Retire, Retain, Rehost, Replatform, Refactor, Repurchase, Relocate",
+            "AWS Migration Hub, Application Discovery Service",
+            "AWS DMS (Database Migration Service), SCT",
+            "AWS MGN (Application Migration Service), MPA"
+          ],
+          "practice_problems": [
+            "Evaluar estrategia de migración para app legacy",
+            "Simular migración de DB on-prem a RDS con DMS",
+            "Crear migration plan con AWS MGN"
+          ]
+        },
+        {
+          "id": "w10d4",
+          "label": "Simulacro de Examen SAA-C03",
+          "status": "locked",
+          "prerequisites": ["w10d3"],
+          "topics": [
+            "Simulacro completo tipo SAA-C03 (65 preguntas, 130 min)",
+            "Análisis de resultados por dominio",
+            "Identificar áreas débiles"
+          ],
+          "practice_problems": [
+            "Tomar simulacro de 65 preguntas",
+            "Revisar errores y conceptos débiles",
+            "Crear plan de estudio para gaps"
+          ]
+        },
+        {
+          "id": "w10d5",
+          "label": "Repaso Final & Assessment",
+          "status": "locked",
+          "prerequisites": ["w10d4"],
+          "topics": [
+            "Repaso de conceptos débiles identificados",
+            "Tips y estrategias para el examen",
+            "Guía para registro y aplicación",
+            "Próximos pasos: DevOps, Security, Specialty certifications"
+          ],
+          "practice_problems": [
+            "Repaso flashcard de servicios clave",
+            "Último simulacro parcial",
+            "Crear plan post-curso"
+          ]
+        }
+      ]
+    }
+  ]
+}
